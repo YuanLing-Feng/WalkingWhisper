@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="resource/style_res/favicon.ico">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://*.tile.openstreetmap.org https://unpkg.com; media-src 'self' blob: data:; connect-src 'self' https://nyw6vsud2p.ap-northeast-1.awsapprunner.com https://*.tile.openstreetmap.org;">
+    <title>声景地点编辑</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/nouislider@14.6.3/distribute/nouislider.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/nouislider@14.6.3/distribute/nouislider.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部用户信息栏 -->
+        <header class="user-header">
+            <div class="user-section">
+                <h1>UserID</h1>
+                <button id="logout-btn" class="logout-btn" title="退出登录">
+                    <span class="material-icons">logout</span>
+                    退出登录
+                </button>
+            </div>
+            <div class="work-info">
+                <span class="work-name" id="work-name">作品名</span>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- 上半栏：地图区域 -->
+            <div class="top-section">
+                <div class="map-container">
+                    <div id="map"></div>
+                </div>
+            </div>
+
+            <!-- 下半栏：GPS信息区域和右侧内容区 -->
+            <div class="bottom-section">
+                <!-- 左侧：GPS信息区域 -->
+                <div class="left-column">
+                    <div class="gps-info">
+                        <div class="gps-coordinates">
+                            <p>GPS Point: 41.40338, 2.17403</p>
+                        </div>
+                        <div class="location-info">
+                            <div class="info-row">
+                                <span class="label">No.</span>
+                                <input type="number" class="value" id="location-no" min="1">
+                                <span class="label">Name</span>
+                                <input type="text" class="value" id="location-name">
+                                <button id="toggle-marker-visibility" class="visibility-btn" title="切换标记点显示状态">
+                                    隐藏标记点
+                                </button>
+                            </div>
+                        </div>
+                        <!-- 录音记录列表 -->
+                        <div class="recording-list">
+                            <!-- 其他记录项类似 -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右侧：图片展示区 -->
+                <div class="right-column" style="display: none;">
+                    <div class="image-gallery">
+                        <div class="image-placeholder" style="background: #fff; border: 1px solid #ddd; height: 200px; display: flex; align-items: center; justify-content: center; position: relative;">
+                            <span style="color: #999;">获取录音中</span>
+                            <div class="audio-player-placeholder" style="background: rgba(128, 128, 128, 0.2); border: 1px solid #ddd; height: 50px; display: flex; align-items: center; justify-content: center; position: absolute; top: 0; left: 0; right: 0;">
+                                <span style="color: #999;">获取图片中</span>
+                            </div>
+                        </div>
+                    <div class="text-content" style="background: #fff; border: 1px solid #ddd; padding: 15px; border-radius: var(--border-radius);">
+                        <span style="color: #999;">获取描述中</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- 修改作品信息弹窗 -->
+    <div id="edit-work-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>修改作品信息</h3>
+                <span class="close" id="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="edit-workname">作品名：</label>
+                    <input type="text" id="edit-workname" placeholder="请输入作品名">
+                </div>
+                <div class="form-group">
+                    <label for="edit-brief-intro">作品简介：</label>
+                    <textarea id="edit-brief-intro" placeholder="请输入作品简介" rows="4"></textarea>
+                </div>
+                <div id="edit-result" class="edit-result" style="display: none;"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="confirm-edit" class="btn btn-primary">确认修改</button>
+                <button id="cancel-edit" class="btn btn-secondary">取消修改</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="map.js"></script>
+</body>
+</html> 
