@@ -2,13 +2,13 @@
 function stopAllAudio() {
     window.isManuallyStopped = true;
     setTimeout(() => { window.isManuallyStopped = false; }, 500);
-    console.log('开始停止所有音频...');
+    // console.log('开始停止所有音频...');
     
     // 策略1: 停止录音音频播放 - 查找所有可能的audio-player-placeholder
     const audioPlayerPlaceholders = document.querySelectorAll('.audio-player-placeholder');
-    console.log('找到的audio-player-placeholder数量:', audioPlayerPlaceholders.length);
+    // console.log('找到的audio-player-placeholder数量:', audioPlayerPlaceholders.length);
     audioPlayerPlaceholders.forEach((placeholder, index) => {
-        console.log(`检查第${index + 1}个audio-player-placeholder:`, placeholder);
+        // console.log(`检查第${index + 1}个audio-player-placeholder:`, placeholder);
         if (placeholder.audio) {
             try {
                 placeholder.audio.onerror = null; // 移除onerror
@@ -26,7 +26,7 @@ function stopAllAudio() {
                 </div>
             `;
         } else {
-            console.log(`第${index + 1}个placeholder没有audio对象`);
+            // console.log(`第${index + 1}个placeholder没有audio对象`);
         }
     });
     
@@ -42,12 +42,12 @@ function stopAllAudio() {
             console.error('停止下载音频时出错:', error);
         }
     } else {
-        console.log('没有找到window.currentPlayingAudio');
+        // console.log('没有找到window.currentPlayingAudio');
     }
     
     // 策略3: 停止所有HTML5音频元素
     const allAudioElements = document.querySelectorAll('audio');
-    console.log('找到的HTML5音频元素数量:', allAudioElements.length);
+    // console.log('找到的HTML5音频元素数量:', allAudioElements.length);
     allAudioElements.forEach((audio, index) => {
         try {
             audio.onerror = null;
@@ -91,83 +91,83 @@ function stopAllAudio() {
         console.error('强制停止媒体播放时出错:', error);
     }
     
-    console.log('所有音频已停止');
+    // console.log('所有音频已停止');
 }
 
-// 全局测试函数
-window.testAudioStop = function() {
-    console.log('=== 测试音频停止功能 ===');
-    console.log('当前页面状态:');
-    console.log('- audio-player-placeholder数量:', document.querySelectorAll('.audio-player-placeholder').length);
-    console.log('- 播放按钮数量:', document.querySelectorAll('.play-btn').length);
-    console.log('- HTML5音频元素数量:', document.querySelectorAll('audio').length);
-    console.log('- window.currentPlayingAudio:', window.currentPlayingAudio);
-    console.log('- window.audioCache:', window.audioCache);
+// // 全局测试函数
+// window.testAudioStop = function() {
+//     // console.log('=== 测试音频停止功能 ===');
+//     // console.log('当前页面状态:');
+//     // console.log('- audio-player-placeholder数量:', document.querySelectorAll('.audio-player-placeholder').length);
+//     // console.log('- 播放按钮数量:', document.querySelectorAll('.play-btn').length);
+//     // console.log('- HTML5音频元素数量:', document.querySelectorAll('audio').length);
+//     // console.log('- window.currentPlayingAudio:', window.currentPlayingAudio);
+//     // console.log('- window.audioCache:', window.audioCache);
     
-    // 查找所有audio-player-placeholder并检查它们的audio属性
-    document.querySelectorAll('.audio-player-placeholder').forEach((placeholder, index) => {
-        console.log(`第${index + 1}个placeholder:`, {
-            element: placeholder,
-            hasAudio: !!placeholder.audio,
-            audio: placeholder.audio,
-            innerHTML: placeholder.innerHTML,
-            isPlaying: placeholder.audio ? !placeholder.audio.paused : false
-        });
-    });
+//     // 查找所有audio-player-placeholder并检查它们的audio属性
+//     document.querySelectorAll('.audio-player-placeholder').forEach((placeholder, index) => {
+//         console.log(`第${index + 1}个placeholder:`, {
+//             element: placeholder,
+//             hasAudio: !!placeholder.audio,
+//             audio: placeholder.audio,
+//             innerHTML: placeholder.innerHTML,
+//             isPlaying: placeholder.audio ? !placeholder.audio.paused : false
+//         });
+//     });
     
-    // 检查所有播放按钮状态
-    document.querySelectorAll('.play-btn').forEach((btn, index) => {
-        console.log(`第${index + 1}个播放按钮:`, {
-            text: btn.textContent,
-            disabled: btn.disabled,
-            isStopButton: btn.textContent === '⏹'
-        });
-    });
+//     // 检查所有播放按钮状态
+//     document.querySelectorAll('.play-btn').forEach((btn, index) => {
+//         console.log(`第${index + 1}个播放按钮:`, {
+//             text: btn.textContent,
+//             disabled: btn.disabled,
+//             isStopButton: btn.textContent === '⏹'
+//         });
+//     });
     
-    // 检查音频缓存
-    if (window.audioCache) {
-        Object.entries(window.audioCache).forEach(([key, audio]) => {
-            console.log(`缓存音频 ${key}:`, {
-                audio: audio,
-                paused: audio.paused,
-                currentTime: audio.currentTime,
-                src: audio.src
-            });
-        });
-    }
+//     // 检查音频缓存
+//     if (window.audioCache) {
+//         Object.entries(window.audioCache).forEach(([key, audio]) => {
+//             console.log(`缓存音频 ${key}:`, {
+//                 audio: audio,
+//                 paused: audio.paused,
+//                 currentTime: audio.currentTime,
+//                 src: audio.src
+//             });
+//         });
+//     }
     
-    // 执行停止操作
-    console.log('=== 执行停止操作 ===');
-    stopAllAudio();
+//     // 执行停止操作
+//     // console.log('=== 执行停止操作 ===');
+//     stopAllAudio();
     
-    console.log('=== 停止后的状态 ===');
-    console.log('- audio-player-placeholder数量:', document.querySelectorAll('.audio-player-placeholder').length);
-    console.log('- 播放按钮数量:', document.querySelectorAll('.play-btn').length);
-    console.log('- HTML5音频元素数量:', document.querySelectorAll('audio').length);
-    console.log('- window.currentPlayingAudio:', window.currentPlayingAudio);
-    console.log('- window.audioCache:', window.audioCache);
+//     // console.log('=== 停止后的状态 ===');
+//     // console.log('- audio-player-placeholder数量:', document.querySelectorAll('.audio-player-placeholder').length);
+//     // console.log('- 播放按钮数量:', document.querySelectorAll('.play-btn').length);
+//     // console.log('- HTML5音频元素数量:', document.querySelectorAll('audio').length);
+//     // console.log('- window.currentPlayingAudio:', window.currentPlayingAudio);
+//     // console.log('- window.audioCache:', window.audioCache);
     
-    // 再次检查所有audio-player-placeholder
-    document.querySelectorAll('.audio-player-placeholder').forEach((placeholder, index) => {
-        console.log(`停止后第${index + 1}个placeholder:`, {
-            element: placeholder,
-            hasAudio: !!placeholder.audio,
-            audio: placeholder.audio,
-            innerHTML: placeholder.innerHTML
-        });
-    });
+//     // 再次检查所有audio-player-placeholder
+//     document.querySelectorAll('.audio-player-placeholder').forEach((placeholder, index) => {
+//         console.log(`停止后第${index + 1}个placeholder:`, {
+//             element: placeholder,
+//             hasAudio: !!placeholder.audio,
+//             audio: placeholder.audio,
+//             innerHTML: placeholder.innerHTML
+//         });
+//     });
     
-    // 再次检查所有播放按钮状态
-    document.querySelectorAll('.play-btn').forEach((btn, index) => {
-        console.log(`停止后第${index + 1}个播放按钮:`, {
-            text: btn.textContent,
-            disabled: btn.disabled,
-            isStopButton: btn.textContent === '⏹'
-        });
-    });
+//     // 再次检查所有播放按钮状态
+//     document.querySelectorAll('.play-btn').forEach((btn, index) => {
+//         console.log(`停止后第${index + 1}个播放按钮:`, {
+//             text: btn.textContent,
+//             disabled: btn.disabled,
+//             isStopButton: btn.textContent === '⏹'
+//         });
+//     });
     
-    console.log('=== 测试完成 ===');
-};
+//     console.log('=== 测试完成 ===');
+// };
 
 window.onload = async function() {
     // 添加修改状态跟踪变量
@@ -187,10 +187,10 @@ window.onload = async function() {
         zoom: 15,           // 设置初始缩放级别，16级可以看到校园主要建筑
         minZoom: 14,       // 限制最小缩放级别，防止缩小太多
         maxZoom: 19,       // 设置最大缩放级别
-        // maxBounds: [       // 限制地图平移范围，大约是校园周边区域
-        //     [29.599684, 106.290526], // 西南角29.598684, 106.293526
-        //     [29.615211, 106.301158]  // 东北角29.607211, 106.304158
-        // ]
+        maxBounds: [       // 限制地图平移范围，大约是校园周边区域
+            [29.599684, 106.290526], // 西南角29.598684, 106.293526
+            [29.615211, 106.301158]  // 东北角29.607211, 106.304158
+        ]
     });
 
     // 添加OpenStreetMap底图
@@ -304,7 +304,7 @@ window.onload = async function() {
                     localStorage.setItem('workName',data.data.workname);
                     localStorage.setItem('brief_intro',data.data.brief_intro);
                     localStorage.setItem('markersData', JSON.stringify(data.data.markers));
-                    console.log('所有位置标记数据已存储到localStorage');
+                    // console.log('所有位置标记数据已存储到localStorage');
                 } catch (error) {
                     console.error('存储数据失败:', error);
                 }
@@ -550,7 +550,7 @@ window.onload = async function() {
                             if (field === 'marker_name') {
                                 marker.marker_name = value;
                             }
-                            console.log('Updated marker in localStorage:', marker);
+                            // console.log('Updated marker in localStorage:', marker);
                             localStorage.setItem('markersData', JSON.stringify(markersData));
                         }
                     }
@@ -605,7 +605,7 @@ window.onload = async function() {
                 isShow: newIsShow
             };
 
-            console.log('Sending visibility update data:', updateData);
+            // console.log('Sending visibility update data:', updateData);
 
             // 发送更新请求
             const response = await fetch('https://nyw6vsud2p.ap-northeast-1.awsapprunner.com/api/v1/edit/markerInfo', {
@@ -691,10 +691,10 @@ window.onload = async function() {
             .addTo(map);
         
         marker.on('click', async function() {
-            console.log('Marker被点击，准备停止所有音频');
+            // console.log('Marker被点击，准备停止所有音频');
             // 停止所有正在播放的音频
             stopAllAudio();
-            console.log('Marker点击事件中的stopAllAudio调用完成');
+            // console.log('Marker点击事件中的stopAllAudio调用完成');
             
             // 新增：点击marker时隐藏右侧内容区
             const rightColumn = document.querySelector('.right-column');
@@ -752,7 +752,7 @@ window.onload = async function() {
                     // 将recordsList存储到localStorage
                     try {
                         localStorage.setItem('recordsList', JSON.stringify(result.data));
-                        console.log('录音记录数据已存储到localStorage');
+                        // console.log('录音记录数据已存储到localStorage');
                     } catch (error) {
                         console.error('存储录音记录数据失败:', error);
                     }
@@ -816,10 +816,9 @@ window.onload = async function() {
                             //     return;
                             // }
 
-                            console.log('Record item被点击，准备停止所有音频');
                             // 停止所有正在播放的音频
+                            console.log('点击的录音ID:', record.record_id);
                             stopAllAudio();
-                            console.log('Record item点击事件中的stopAllAudio调用完成');
 
                             // 移除所有录音项目的选中状态
                             document.querySelectorAll('.recording-item').forEach(recordingItem => {
@@ -860,8 +859,6 @@ window.onload = async function() {
                                     throw new Error('未登录');
                                 }
 
-                                console.log('获取录音图片和音频 - record_id:', record.record_id);
-                                
                                 // 同时调用两个接口
                                 const [picResponse, audioResponse] = await Promise.all([
                                     fetch(`https://nyw6vsud2p.ap-northeast-1.awsapprunner.com/api/v1/get/getpic?user_id=${user_id}&record_id=${record.record_id}`, {
@@ -880,9 +877,6 @@ window.onload = async function() {
 
                                 const picResult = await picResponse.json();
                                 const audioResult = await audioResponse.json();
-                                // console.log('发送录音图片请求:', "getaudio?user_id="+user_id+"&record_id="+record.record_id);
-                                console.log('获取录音图片响应:', picResult);
-                                console.log('获取录音音频响应:', audioResult);
 
                                 // 处理图片数据
                                 if (picResult.code === 200 && picResult.data) {
@@ -896,8 +890,6 @@ window.onload = async function() {
                                     // console.log('找到image-placeholder:', imagePlaceholder);
                                     
                                     if (picResult.data.img) {
-                                        console.log('找到图片数据，长度:', picResult.data.img.length);
-                                        
                                         // 清空image-placeholder
                                         imagePlaceholder.innerHTML = '';
                                         
@@ -911,7 +903,11 @@ window.onload = async function() {
                                         
                                         // 添加图片加载事件
                                         img.onload = function() {
-                                            console.log('图片加载成功');
+                                            // 只在第一次加载时翻转图像
+                                            if (!img.dataset.flipped) {
+                                                // 翻转图像以修正上下颠倒的问题
+                                                flipImageVertically(img);
+                                            }
                                         };
                                         img.onerror = function() {
                                             console.error('图片加载失败');
@@ -919,7 +915,6 @@ window.onload = async function() {
                                         
                                         // 添加图片
                                         imagePlaceholder.appendChild(img);
-                                        // console.log('图片已添加到DOM');
                                         
                                         // 使用现有的音频播放器，而不是创建新的
                                         const audioPlayerPlaceholder = imagePlaceholder.querySelector('.audio-player-placeholder');
@@ -936,7 +931,6 @@ window.onload = async function() {
                                             // console.log('新的音频播放器已添加到DOM（有图片情况）');
                                         }
                                     } else {
-                                        console.log('没有图片数据');
                                         imagePlaceholder.innerHTML = '<span style="color: #999;">记录设备未上传图片数据</span>';
                                         
                                         // 使用现有的音频播放器，而不是创建新的
@@ -977,7 +971,6 @@ window.onload = async function() {
                                         textContent.innerHTML = '<span style="color: #999; display: flex; align-items: center; justify-content: center; height: 100%; text-align: center;">未获取到文本记录</span>';
                                     }
                                 } else {
-                                    console.error('获取录音图片失败:', picResult.message);
                                     // 如果获取图片失败，显示错误信息
                                     const imagePlaceholder = document.querySelector('.image-placeholder');
                                     if (imagePlaceholder) {
@@ -1000,14 +993,11 @@ window.onload = async function() {
                                     });
                                     // 将音频数据存储到localStorage
                                     localStorage.setItem(`audio_${record.record_id}`, audioResult.data.audio);
-                                    console.log('音频数据已暂存 - record_id:', record.record_id);
                                     
                                     // 更新音频播放器显示 - 重新查找audio-player-placeholder
                                     const audioPlayerPlaceholder = document.querySelector('.audio-player-placeholder');
-                                    // console.log('找到音频播放器:', audioPlayerPlaceholder);
                                     
                                     if (audioPlayerPlaceholder) {
-                                        // console.log('更新音频播放器显示');
                                         audioPlayerPlaceholder.innerHTML = `
                                             <div style="display: flex; align-items: center; gap: 10px;">
                                                 <span style="font-size: 24px; color: #fff;">🎵</span>
@@ -1018,7 +1008,6 @@ window.onload = async function() {
                                         // 为音频播放器添加点击事件
                                         let audio = null;
                                         audioPlayerPlaceholder.onclick = function() {
-                                            // console.log('音频播放器被点击');
                                             if (!audio) {
                                                 try {
                                                     // 从localStorage获取音频数据
@@ -1028,10 +1017,6 @@ window.onload = async function() {
                                                         return;
                                                     }
                                                     
-                                                    console.log('开始处理音频数据');
-                                                    console.log('音频数据长度:', audioData.length);
-                                                    console.log('音频数据前50个字符:', audioData.substring(0, 50));
-                                                    
                                                     // 检查音频数据是否为空或过短
                                                     if (!audioData || audioData.length < 100) {
                                                         console.error('音频数据为空或过短');
@@ -1040,7 +1025,6 @@ window.onload = async function() {
                                                     }
                                                     
                                                     // 尝试直接使用base64数据创建音频
-                                                    console.log('尝试直接播放base64音频数据');
                                                     const audioUrl = `data:audio/wav;base64,${audioData}`;
                                                     
                                                     audio = new Audio();
@@ -1049,8 +1033,8 @@ window.onload = async function() {
                                                     audioPlayerPlaceholder.audio = audio;
                                                     
                                                     // 添加音频加载事件
-                                                    audio.onloadstart = () => console.log('音频开始加载');
-                                                    audio.oncanplay = () => console.log('音频可以播放');
+                                                    audio.onloadstart = () => {};
+                                                    audio.oncanplay = () => {};
                                                     audio.onerror = (e) => {
                                                         if (window.isManuallyStopped) return;
                                                         console.error('直接播放base64失败，尝试PCM转换');
@@ -1062,7 +1046,6 @@ window.onload = async function() {
                                                     };
                                                     
                                                     audio.onended = () => {
-                                                        console.log('音频播放结束');
                                                         audioPlayerPlaceholder.innerHTML = `
                                                             <div style="display: flex; align-items: center; gap: 10px;">
                                                                 <span style="font-size: 24px; color: #fff;">🎵</span>
@@ -1079,13 +1062,11 @@ window.onload = async function() {
                                                     // 等待音频加载完成后再播放
                                                     audio.oncanplaythrough = () => {
                                                         if (window.isManuallyStopped) {
-                                                            console.log('打断后不自动播放');
                                                             return;
                                                         }
                                                         // 音频加载完成后自动播放
                                                         audio.play()
                                                             .then(() => {
-                                                                // console.log('音频开始播放');
                                                                 audioPlayerPlaceholder.innerHTML = `
                                                                     <div style="display: flex; align-items: center; gap: 10px;">
                                                                         <span style="font-size: 24px; color: #fff;">⏸</span>
@@ -1094,7 +1075,6 @@ window.onload = async function() {
                                                                 `;
                                                             })
                                                             .catch(error => {
-                                                                // console.error('播放音频失败:', error);
                                                                 alert('无法播放音频文件：' + error.message);
                                                             });
                                                     };
@@ -1104,48 +1084,41 @@ window.onload = async function() {
                                                     alert('音频处理失败：' + error.message);
                                                     return;
                                                 }
-                                            } else {
-                                                // 音频对象已存在，切换播放/暂停状态
-                                                // 确保引用正确
-                                                audioPlayerPlaceholder.audio = audio;
-                                                
-                                                if (audio.paused) {
-                                                    audio.play()
-                                                        .then(() => {
-                                                            // console.log('音频恢复播放');
-                                                            audioPlayerPlaceholder.innerHTML = `
-                                                                <div style="display: flex; align-items: center; gap: 10px;">
-                                                                    <span style="font-size: 24px; color: #fff;">⏸</span>
-                                                                    <span style="color: #fff;">点击暂停</span>
-                                                                </div>
-                                                            `;
-                                                        })
-                                                        .catch(error => {
-                                                            // console.error('播放音频失败:', error);
-                                                            alert('无法播放音频文件：' + error.message);
-                                                        });
-                                                } else {
-                                                    audio.pause();
-                                                    // console.log('音频已暂停');
-                                                    audioPlayerPlaceholder.innerHTML = `
-                                                        <div style="display: flex; align-items: center; gap: 10px;">
-                                                            <span style="font-size: 24px; color: #fff;">🎵</span>
-                                                            <span style="color: #fff;">点击播放录音</span>
-                                                        </div>
-                                                    `;
+                                                                                            } else {
+                                                    // 音频对象已存在，切换播放/暂停状态
+                                                    // 确保引用正确
+                                                    audioPlayerPlaceholder.audio = audio;
+                                                    
+                                                    if (audio.paused) {
+                                                        audio.play()
+                                                            .then(() => {
+                                                                audioPlayerPlaceholder.innerHTML = `
+                                                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                                                        <span style="font-size: 24px; color: #fff;">⏸</span>
+                                                                        <span style="color: #fff;">点击暂停</span>
+                                                                    </div>
+                                                                `;
+                                                            })
+                                                            .catch(error => {
+                                                                alert('无法播放音频文件：' + error.message);
+                                                            });
+                                                    } else {
+                                                        audio.pause();
+                                                        audioPlayerPlaceholder.innerHTML = `
+                                                            <div style="display: flex; align-items: center; gap: 10px;">
+                                                                <span style="font-size: 24px; color: #fff;">🎵</span>
+                                                                <span style="color: #fff;">点击播放录音</span>
+                                                            </div>
+                                                        `;
+                                                    }
                                                 }
-                                            }
                                         };
                                         
                                         // PCM转换函数
                                         function tryPCMConversion(audioData, recordId) {
                                             try {
-                                                console.log('开始PCM转换');
-                                                
                                                 // 将base64编码的PCM数据转换为WAV格式
                                                 const pcmData = atob(audioData);
-                                                console.log('PCM数据长度:', pcmData.length);
-                                                console.log('PCM数据前10字节:', Array.from(pcmData.slice(0, 10).split('').map(c => c.charCodeAt(0))));
                                                 
                                                 // 检查PCM数据是否有效
                                                 if (pcmData.length === 0) {
@@ -1153,7 +1126,6 @@ window.onload = async function() {
                                                 }
                                                 
                                                 const wavData = convertPCMToWAV(pcmData, 16000);
-                                                console.log('WAV数据长度:', wavData.byteLength);
                                                 
                                                 // 检查WAV数据是否有效
                                                 if (wavData.byteLength < 44) {
@@ -1162,10 +1134,8 @@ window.onload = async function() {
                                                 
                                                 // 创建WAV格式的音频Blob
                                                 const audioBlob = new Blob([wavData], { type: 'audio/wav' });
-                                                console.log('音频Blob大小:', audioBlob.size, 'bytes');
                                                 
                                                 const audioUrl = URL.createObjectURL(audioBlob);
-                                                console.log('创建WAV音频URL:', audioUrl);
                                                 
                                                 // 创建新的音频对象
                                                 const newAudio = new Audio();
@@ -1173,8 +1143,8 @@ window.onload = async function() {
                                                 // 将新音频对象存储到audioPlayerPlaceholder上
                                                 audioPlayerPlaceholder.audio = newAudio;
                                                 
-                                                newAudio.onloadstart = () => console.log('PCM转换音频开始加载');
-                                                newAudio.oncanplay = () => console.log('PCM转换音频可以播放');
+                                                newAudio.onloadstart = () => {};
+                                                newAudio.oncanplay = () => {};
                                                 newAudio.onerror = (e) => {
                                                     if (window.isManuallyStopped) return;
                                                     console.error('PCM转换音频加载错误:', e);
@@ -1183,7 +1153,6 @@ window.onload = async function() {
                                                 };
                                                 
                                                 newAudio.onended = () => {
-                                                    console.log('PCM转换音频播放结束');
                                                     audioPlayerPlaceholder.innerHTML = `
                                                         <div style="display: flex; align-items: center; gap: 10px;">
                                                             <span style="font-size: 24px; color: #fff;">🎵</span>
@@ -1197,13 +1166,10 @@ window.onload = async function() {
                                                 
                                                 newAudio.oncanplaythrough = () => {
                                                     if (window.isManuallyStopped) {
-                                                        console.log('打断后不自动播放(PCM)');
                                                         return;
                                                     }
-                                                    console.log('PCM转换音频完全加载，开始播放');
                                                     newAudio.play()
                                                         .then(() => {
-                                                            console.log('PCM转换音频开始播放');
                                                             audio = newAudio;
                                                             audioPlayerPlaceholder.innerHTML = `
                                                                 <div style="display: flex; align-items: center; gap: 10px;">
@@ -1229,7 +1195,6 @@ window.onload = async function() {
                                         console.error('未找到音频播放器元素');
                                     }
                                 } else {
-                                    console.error('获取录音音频失败:', audioResult.message);
                                     // 如果没有音频数据，显示获取失败状态
                                     const audioPlayerPlaceholder = document.querySelector('.audio-player-placeholder');
                                     if (audioPlayerPlaceholder) {
@@ -1243,8 +1208,6 @@ window.onload = async function() {
                                     }
                                 }
                             } catch (error) {
-                                console.error('获取录音数据错误:', error);
-                                
                                 // 显示获取失败状态
                                 const rightColumn = document.querySelector('.right-column');
                                 if (rightColumn) {
@@ -2192,6 +2155,50 @@ window.onload = async function() {
     function writeString(view, offset, string) {
         for (let i = 0; i < string.length; i++) {
             view.setUint8(offset + i, string.charCodeAt(i));
+        }
+    }
+
+    // 翻转图像函数 - 修正上下颠倒的图像
+    function flipImageVertically(img) {
+        try {
+            // 检查图像是否已经翻转过，避免无限循环
+            if (img.dataset.flipped === 'true') {
+                return;
+            }
+            
+            // 创建canvas元素
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // 设置canvas尺寸为图像尺寸
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            
+            // 保存当前上下文状态
+            ctx.save();
+            
+            // 移动到canvas中心
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+            
+            // 垂直翻转（上下颠倒）
+            ctx.scale(1, -1);
+            
+            // 绘制图像，注意位置调整
+            ctx.drawImage(img, -img.naturalWidth / 2, -img.naturalHeight / 2);
+            
+            // 恢复上下文状态
+            ctx.restore();
+            
+            // 将翻转后的图像数据转换为新的图像源
+            const flippedImageDataUrl = canvas.toDataURL('image/jpeg', 0.9);
+            
+            // 标记图像已翻转，防止重复处理
+            img.dataset.flipped = 'true';
+            
+            // 更新原图像的src
+            img.src = flippedImageDataUrl;
+        } catch (error) {
+            console.error('翻转图像时出错:', error);
         }
     }
 
