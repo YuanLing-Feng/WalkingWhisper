@@ -1,5 +1,14 @@
-// 全局音频停止函数
-function stopAllAudio() {
+    // 辅助函数：确保 marker no 为 int 类型
+    function ensureMarkerNoIsInt(markersData) {
+        if (!markersData || !Array.isArray(markersData)) return markersData;
+        return markersData.map(marker => ({
+            ...marker,
+            no: typeof marker.no === 'string' ? parseInt(marker.no, 10) : marker.no
+        }));
+    }
+
+    // 全局音频停止函数
+    function stopAllAudio() {
     window.isManuallyStopped = true;
     setTimeout(() => { window.isManuallyStopped = false; }, 500);
     // console.log('开始停止所有音频...');
@@ -299,11 +308,17 @@ window.onload = async function() {
                 if (data.data.markers.length == 0)
                     return;
                 
+                // 处理返回的数据，确保 marker no 为 int 类型
+                const processedMarkers = data.data.markers.map(marker => ({
+                    ...marker,
+                    no: typeof marker.no === 'string' ? parseInt(marker.no, 10) : marker.no
+                }));
+                
                 // 存储到 localStorage
                 try {
                     localStorage.setItem('workName',data.data.workname);
                     localStorage.setItem('brief_intro',data.data.brief_intro);
-                    localStorage.setItem('markersData', JSON.stringify(data.data.markers));
+                    localStorage.setItem('markersData', JSON.stringify(processedMarkers));
                     // console.log('所有位置标记数据已存储到localStorage');
                 } catch (error) {
                     console.error('存储数据失败:', error);
@@ -496,7 +511,7 @@ window.onload = async function() {
                 }
 
                 // 获取当前选中的标记点信息
-                const markersData = JSON.parse(localStorage.getItem('markersData') || '[]');
+                const markersData = ensureMarkerNoIsInt(JSON.parse(localStorage.getItem('markersData') || '[]'));
                 if (!markersData || !Array.isArray(markersData)) return;
                 
                 // 使用经纬度查找标记点
@@ -512,7 +527,7 @@ window.onload = async function() {
                     latitude: parseFloat(latitude),
                     longitude: parseFloat(longitude),
                     // marker_id: marker.marker_id,
-                    no: field === 'no' ? value : document.getElementById('location-no').value,
+                    no: field === 'no' ? parseInt(value, 10) : parseInt(document.getElementById('location-no').value, 10),
                     name: field === 'marker_name' ? value : document.getElementById('location-name').value,
                     isShow: field === 'isShow' ? value : document.getElementById('toggle-marker-visibility').classList.contains('show')
                 };
@@ -545,7 +560,7 @@ window.onload = async function() {
                             marker.isShow = updateData.isShow;
                             // marker.marker_id = updateData.marker_id;
                             if (field === 'no') {
-                                marker.no = value;
+                                marker.no = parseInt(value, 10);
                             }
                             if (field === 'marker_name') {
                                 marker.marker_name = value;
@@ -584,7 +599,7 @@ window.onload = async function() {
             }
 
             // 获取当前选中的标记点信息
-            const markersData = JSON.parse(localStorage.getItem('markersData') || '[]');
+            const markersData = ensureMarkerNoIsInt(JSON.parse(localStorage.getItem('markersData') || '[]'));
             if (!markersData || !Array.isArray(markersData)) return;
             
             // 使用经纬度查找标记点
@@ -600,7 +615,7 @@ window.onload = async function() {
                 latitude: parseFloat(latitude),
                 longitude: parseFloat(longitude),
                 // marker_id: marker.marker_id,
-                no: document.getElementById('location-no').value,
+                no: parseInt(document.getElementById('location-no').value, 10),
                 name: document.getElementById('location-name').value,
                 isShow: newIsShow
             };
@@ -2021,7 +2036,7 @@ window.onload = async function() {
     // 更新标记点显示状态的函数
     function updateMarkersVisibility() {
         // 从 localStorage 获取 markersData
-        const markersData = JSON.parse(localStorage.getItem('markersData') || '[]');
+        const markersData = ensureMarkerNoIsInt(JSON.parse(localStorage.getItem('markersData') || '[]'));
         if (!markersData || !Array.isArray(markersData)) return;
 
         // 清除所有现有标记点
@@ -2252,7 +2267,7 @@ window.onload = async function() {
             
             // 如果无法从GPS显示获取，尝试从markersData获取
             if (latitude === 0 && longitude === 0) {
-                const markersData = JSON.parse(localStorage.getItem('markersData') || '[]');
+                const markersData = ensureMarkerNoIsInt(JSON.parse(localStorage.getItem('markersData') || '[]'));
                 const currentMarker = markersData.find(m => m.marker_id === record.record_id);
                 if (currentMarker) {
                     latitude = parseFloat(currentMarker.latitude || 0);
